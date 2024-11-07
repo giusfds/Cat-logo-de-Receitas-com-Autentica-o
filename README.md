@@ -21,52 +21,68 @@ O Bootstrap oferece uma coleção extensa de componentes de interface, como bot�
 
 ## 3. **Organização das Pastas**
 ```bash
-project-root/
-├── client/                         # Front-end (React)
-│   ├── public/                     # Arquivos públicos, como index.html, ícones, manifest.json
-│   ├── src/                        # Código-fonte do React
-│   │   ├── assets/                 # Imagens, fontes, e arquivos estáticos
-│   │   ├── components/             # Componentes reutilizáveis da interface
-│   │   ├── hooks/                  # Hooks customizados para lógica de negócio
-│   │   ├── pages/                  # Páginas e rotas principais do aplicativo
-│   │   ├── services/               # Serviços de API para comunicação com o back-end
-│   │   ├── styles/                 # Arquivos de estilo e temas
-│   │   └── App.js                  # Componente principal do React
-│   └── package.json                # Dependências e scripts do React
+Front
+├── adicionar.html
+├── cadastro.html
+├── listagem.html
+└── login.html
 
-├── server/                         # Back-end (NestJS)
-│   ├── src/                        
-│   │   ├── modules/                # Módulos principais da aplicação
-│   │   ├── controllers/            # Controladores que gerenciam as rotas
-│   │   ├── services/               # Serviços que contêm a lógica de negócios
-│   │   ├── entities/               # Definições de entidades e modelos de dados
-│   │   ├── dto/                    # Objetos de transferência de dados
-│   │   ├── main.ts                 # Arquivo principal do NestJS
-│   └── package.json                # Dependências e scripts do NestJS
-
-├── .gitignore                      # Arquivos e diretórios ignorados pelo Git
-├── README.md                       # Documentação do projeto
-└── docker-compose.yml              # Arquivo para gerenciar o ambiente de contêineres
+recipe_vault
+├── dist
+├── node_modules
+└── src
+    └── receita
+        ├── receita.controller.ts
+        ├── receita.dto.ts
+        ├── receita.module.ts
+        ├── receita.service.ts
+        ├── app.controller.ts
+        ├── app.module.ts
+        ├── app.service.ts
+        └── main.ts
+├── .eslintrc.js
+├── .gitignore
+├── .prettierrc
+├── nest-cli.json
+├── package-lock.json
+├── package.json
+├── README.md
+├── tsconfig.build.json
+└── tsconfig.json
 
 ```
 
 ---
 
 ## 4. **Funcionalidades Principais e Diferenciais**
-Destaque as funcionalidades principais e, se houver, os diferenciais implementados. Siga os requisitos:
 
-- **Autenticação de Usuário**: Cadastro e login de usuários, proteção das rotas para visualização e adição de receitas.
+Este projeto foi desenvolvido utilizando **NestJS** para o back-end, **PostgreSQL** como banco de dados e **HTML** para o front-end, com o objetivo de oferecer um sistema robusto e eficiente de gestão de receitas culinárias. Abaixo estão as principais funcionalidades e diferenciais implementados:
+
+### Funcionalidades Principais
+
+- **Autenticação de Usuário**: 
+  - Implementação de cadastro e login de usuários para acesso ao sistema.
+  - Proteção de rotas para visualização e adição de receitas, garantindo que apenas usuários autenticados possam acessar certas funcionalidades.
+
 - **Gestão de Receitas**:
-  - Listagem paginada de receitas.
-  - Adição de novas receitas (campos como nome, ingredientes, modo de preparo, tempo de preparo, nível de dificuldade).
-  - Soft-delete para exclusão de receitas.
-  - Exibição de dados de uma receita específica em um modal.
-- **Diferenciais (se implementados)**:
-  - Explique cada um dos diferenciais adicionados:
-    - **Recuperação de Senha** ou autenticação com **JWT tokens**.
-    - **Filtros Avançados** (por popularidade, ingredientes, etc.).
-    - **Aplicativo Mobile**: Uso de React Native para uma versão móvel.
-    - **Funcionalidades Extras** como edição de receitas, ordenação ou recomendações.
+  - **Listagem Paginada de Receitas**: As receitas são exibidas em páginas, facilitando a navegação e organização dos dados.
+  - **Adição de Novas Receitas**: Usuários autenticados podem adicionar novas receitas ao sistema, preenchendo campos como:
+    - Nome da receita
+    - Ingredientes
+    - Modo de preparo
+    - Tempo de preparo
+    - Nível de dificuldade
+  - **Soft-delete para Exclusão de Receitas**: Implementado um sistema de exclusão lógica (soft-delete), onde as receitas não são apagadas do banco de dados, mas ficam indisponíveis para visualização, permitindo possível recuperação futura.
+  - **Exibição Detalhada de Receitas**: Dados completos de uma receita específica são exibidos em um modal, facilitando o acesso a informações sem a necessidade de recarregar a página.
+
+### Diferenciais
+
+Além das funcionalidades principais, foram implementados diferenciais para aumentar a segurança e a usabilidade da aplicação:
+
+- **Autenticação JWT**: A autenticação baseada em tokens JWT (JSON Web Tokens) foi adicionada para maior segurança nas sessões de usuários. Com isso, o sistema garante que apenas usuários com um token válido possam acessar e interagir com as funcionalidades protegidas.
+
+- **Filtros Avançados**:
+  - Os usuários podem filtrar as receitas por diversos critérios, como popularidade e ingredientes. Isso facilita a busca por receitas específicas e proporciona uma experiência de usuário mais personalizada.
 
 ---
 
@@ -78,6 +94,8 @@ Explique as decisões técnicas tomadas e as boas práticas adotadas:
 - **Boas Práticas**: Explique práticas como modularização de código, uso de variáveis de ambiente para configurações sensíveis e validações nas entradas de dados.
 
 ---
+
+> FALTA FAZER ISSO AQUI
 
 ## 6. **Instruções de Instalação e Execução**
 Dê instruções claras sobre como rodar o projeto localmente:
@@ -99,4 +117,16 @@ Dê instruções claras sobre como rodar o projeto localmente:
 ---
 
 ## 7. **Teste e Validação**
-Indique como os testes unitários foram feitos, se aplicável, e como testar as funcionalidades básicas da API (com **Postman**, por exemplo).
+
+Para testar e validar as APIs desenvolvidas no projeto, foi utilizado o Postman, uma ferramenta popular para desenvolvimento e testes de APIs REST. O Postman permite realizar requisições HTTP de maneira simplificada, facilitando a verificação do funcionamento das rotas e métodos criados no back-end.
+
+### Como os testes foram realizados
+1. **Configuração de Requisições**: As requisições HTTP, como `GET`, `POST`, `PUT` e `DELETE`, foram configuradas no Postman para simular interações com as rotas da aplicação. Cada rota foi testada individualmente para garantir que retornasse os dados corretos ou realizasse as operações esperadas.
+
+2. **Envio de Dados**: No caso de requisições que exigem dados no corpo (como `POST` e `PUT`), foram criados JSONs de exemplo no Postman para verificar se a API processava corretamente as informações enviadas e respondia com os dados esperados ou com uma mensagem de confirmação.
+
+3. **Validação de Respostas**: As respostas das requisições foram analisadas para confirmar se os status HTTP (como `200 OK`, `201 Created`, `400 Bad Request`, etc.) eram apropriados para cada situação. Também foi verificado se os dados retornados estavam no formato correto e continham todas as informações necessárias.
+
+4. **Testes de Erro**: Foram realizados testes de cenários de erro, enviando dados incorretos ou incompletos para as rotas, para garantir que a API responde com mensagens de erro apropriadas e status HTTP adequados, reforçando a robustez da aplicação.
+
+Com o Postman, foi possível automatizar parte desses testes e salvar as configurações das requisições, permitindo que o processo de validação seja repetido facilmente sempre que o código for atualizado.

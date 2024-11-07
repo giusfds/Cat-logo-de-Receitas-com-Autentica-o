@@ -20,13 +20,35 @@ O Bootstrap oferece uma coleção extensa de componentes de interface, como bot�
 ---
 
 ## 3. **Organização das Pastas**
-Aqui, descreva como está estruturado o projeto. Um exemplo de organização pode incluir:
+```bash
+project-root/
+├── client/                         # Front-end (React)
+│   ├── public/                     # Arquivos públicos, como index.html, ícones, manifest.json
+│   ├── src/                        # Código-fonte do React
+│   │   ├── assets/                 # Imagens, fontes, e arquivos estáticos
+│   │   ├── components/             # Componentes reutilizáveis da interface
+│   │   ├── hooks/                  # Hooks customizados para lógica de negócio
+│   │   ├── pages/                  # Páginas e rotas principais do aplicativo
+│   │   ├── services/               # Serviços de API para comunicação com o back-end
+│   │   ├── styles/                 # Arquivos de estilo e temas
+│   │   └── App.js                  # Componente principal do React
+│   └── package.json                # Dependências e scripts do React
 
-- **Frontend** e **Backend**: Divida o projeto entre as pastas que contêm o código do front-end e do back-end.
-- **Pasta `src`**: Dentro de `src`, organize subpastas para **componentes**, **páginas**, **serviços** (para requisições de API), **estilos**, e **utils** (funções auxiliares).
-- **Rotas**: Explique onde e como estão estruturadas as rotas de navegação e acesso do front-end.
-- **API**: Detalhe onde ficam as rotas da API e como está organizada a comunicação com o banco de dados.
-- **Configurações**: Inclua configurações importantes, como o arquivo de ambiente (`.env`), e o que deve ser configurado pelo usuário para rodar a aplicação.
+├── server/                         # Back-end (NestJS)
+│   ├── src/                        
+│   │   ├── modules/                # Módulos principais da aplicação
+│   │   ├── controllers/            # Controladores que gerenciam as rotas
+│   │   ├── services/               # Serviços que contêm a lógica de negócios
+│   │   ├── entities/               # Definições de entidades e modelos de dados
+│   │   ├── dto/                    # Objetos de transferência de dados
+│   │   ├── main.ts                 # Arquivo principal do NestJS
+│   └── package.json                # Dependências e scripts do NestJS
+
+├── .gitignore                      # Arquivos e diretórios ignorados pelo Git
+├── README.md                       # Documentação do projeto
+└── docker-compose.yml              # Arquivo para gerenciar o ambiente de contêineres
+
+```
 
 ---
 

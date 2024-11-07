@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Recipe List</title>
-        <style>
-            * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-                font-family: Arial, sans-serif;
-            }
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipe List</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
         body {
             display: flex;
             flex-direction: column;
@@ -97,6 +97,7 @@
         .recipe-item {
             padding: 15px;
             border-bottom: 1px solid #ddd;
+            position: relative;
         }
         .recipe-item:last-child {
             border-bottom: none;
@@ -107,6 +108,17 @@
         .recipe-details p {
             margin: 5px 0;
             font-size: 0.9em;
+        }
+        .delete-button {
+            background-color: #555;
+            color: #fff;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 15px;
         }
         .pagination {
             display: flex;
@@ -125,50 +137,45 @@
             background-color: #aaa;
             cursor: not-allowed;
         }
-        </style>
-    </head>
+    </style>
+</head>
 
-    <body>
-        <div class="container">
+<body>
+    <div class="container">
         <div class="header">
             <h2>Lista de Receitas</h2>
             <button class="menu-button" onclick="openMenu()">Menu</button>
         </div>
         <div class="filter">
-            <input
-            type="text"
-            id="filterInput"
-            placeholder="Filtrar por nome"
-            oninput="filterRecipes()"
-            />
+            <input type="text" id="filterInput" placeholder="Filtrar por nome" oninput="filterRecipes()" />
         </div>
         <ul class="recipe-list" id="recipeList"></ul>
         <div class="pagination">
             <button onclick="prevPage()" id="prevButton">Anterior</button>
             <button onclick="nextPage()" id="nextButton">Próxima</button>
         </div>
-        </div>
+    </div>
 
-        <!-- Overlay Menu -->
-        <div id="menuOverlay">
+    <!-- Overlay Menu -->
+    <div id="menuOverlay">
         <div class="overlay-content">
-            <button class="overlay-button" onclick="navigateTo('listagem.html')">
-            Listar Receitas
-            </button>
-            <button class="overlay-button" onclick="navigateTo('adicionar.html')">
-            Adicionar Nova Receita
-            </button>
-            <button class="overlay-button" onclick="closeMenu()">
-            Fechar Menu
-            </button>
+            <button class="overlay-button" onclick="navigateTo('listagem.html')">Listar Receitas</button>
+            <button class="overlay-button" onclick="navigateTo('adicionar.html')">Adicionar Nova Receita</button>
+            <button class="overlay-button" onclick="closeMenu()">Fechar Menu</button>
         </div>
-        </div>
+    </div>
 
-        <script>
+    <script>
         let currentPage = 1;
         const recipesPerPage = 5;
-        let allRecipes = [];
-        let filteredRecipes = [];
+        let allRecipes = [
+            { name: "Bolo de Chocolate", ingredients: "Farinha, açúcar, ovos, cacau em pó, manteiga", preparation: "Misture os ingredientes e leve ao forno por 40 minutos.", prepTime: "40 minutos", difficulty: "Fácil", isDeleted: false },
+            { name: "Torta de Maçã", ingredients: "Maçãs, açúcar, farinha, manteiga, canela", preparation: "Faça a massa, recheie com maçãs e leve ao forno por 50 minutos.", prepTime: "50 minutos", difficulty: "Médio", isDeleted: false },
+            { name: "Pão de Queijo", ingredients: "Polvilho doce, leite, queijo, ovos, óleo", preparation: "Misture tudo e asse por 30 minutos.", prepTime: "30 minutos", difficulty: "Fácil", isDeleted: false },
+            { name: "Pudim de Leite", ingredients: "Leite condensado, leite, ovos, açúcar", preparation: "Bata os ingredientes e asse em banho-maria por 1 hora.", prepTime: "1 hora", difficulty: "Médio", isDeleted: false },
+            { name: "Brigadeiro", ingredients: "Leite condensado, chocolate em pó, manteiga", preparation: "Misture tudo e cozinhe até engrossar.", prepTime: "20 minutos", difficulty: "Fácil", isDeleted: false }
+        ];
+        let filteredRecipes = allRecipes;
 
         // Menu functions
         function openMenu() {
@@ -183,52 +190,6 @@
             window.location.href = page;
         }
 
-        // Fetch recipes from the server
-        async function fetchRecipes() {
-            allRecipes = [
-            {
-                name: "Bolo de Chocolate",
-                ingredients: "Farinha, açúcar, ovos, cacau em pó, manteiga",
-                preparation:
-                "Misture os ingredientes e leve ao forno por 40 minutos.",
-                prepTime: "40 minutos",
-                difficulty: "Fácil",
-            },
-            {
-                name: "Torta de Maçã",
-                ingredients: "Maçãs, açúcar, farinha, manteiga, canela",
-                preparation:
-                "Faça a massa, recheie com maçãs e leve ao forno por 50 minutos.",
-                prepTime: "50 minutos",
-                difficulty: "Médio",
-            },
-            {
-                name: "Pão de Queijo",
-                ingredients: "Polvilho doce, leite, queijo, ovos, óleo",
-                preparation: "Misture tudo e asse por 30 minutos.",
-                prepTime: "30 minutos",
-                difficulty: "Fácil",
-            },
-            {
-                name: "Pudim de Leite",
-                ingredients: "Leite condensado, leite, ovos, açúcar",
-                preparation:
-                "Bata os ingredientes e asse em banho-maria por 1 hora.",
-                prepTime: "1 hora",
-                difficulty: "Médio",
-            },
-            {
-                name: "Brigadeiro",
-                ingredients: "Leite condensado, chocolate em pó, manteiga",
-                preparation: "Misture tudo e cozinhe até engrossar.",
-                prepTime: "20 minutos",
-                difficulty: "Fácil",
-            },
-            ];
-            filteredRecipes = allRecipes;
-            renderRecipes();
-        }
-
         // Render recipes on the page
         function renderRecipes() {
             const recipeList = document.getElementById("recipeList");
@@ -238,37 +199,40 @@
             const end = start + recipesPerPage;
             const recipesToDisplay = filteredRecipes.slice(start, end);
 
-            recipesToDisplay.forEach((recipe) => {
-            const li = document.createElement("li");
-            li.className = "recipe-item";
-            li.innerHTML = `
-                            <h3>${recipe.name}</h3>
-                            <div class="recipe-details">
-                                <p><strong>Ingredientes:</strong> ${recipe.ingredients}</p>
-                                <p><strong>Modo de Preparo:</strong> ${recipe.preparation}</p>
-                                <p><strong>Tempo de Preparo:</strong> ${recipe.prepTime}</p>
-                                <p><strong>Nível de Dificuldade:</strong> ${recipe.difficulty}</p>
-                            </div>
-                        `;
-            recipeList.appendChild(li);
+            recipesToDisplay.forEach((recipe, index) => {
+                if (!recipe.isDeleted) {
+                    const li = document.createElement("li");
+                    li.className = "recipe-item";
+                    li.innerHTML = `
+                        <h3>${recipe.name}</h3>
+                        <button class="delete-button" onclick="softDeleteRecipe(${index + start})">Excluir</button>
+                        <div class="recipe-details">
+                            <p><strong>Ingredientes:</strong> ${recipe.ingredients}</p>
+                            <p><strong>Modo de Preparo:</strong> ${recipe.preparation}</p>
+                            <p><strong>Tempo de Preparo:</strong> ${recipe.prepTime}</p>
+                            <p><strong>Nível de Dificuldade:</strong> ${recipe.difficulty}</p>
+                        </div>
+                    `;
+                    recipeList.appendChild(li);
+                }
             });
 
-            // Update pagination buttons
             document.getElementById("prevButton").disabled = currentPage === 1;
-            document.getElementById("nextButton").disabled =
-            end >= filteredRecipes.length;
+            document.getElementById("nextButton").disabled = end >= filteredRecipes.length;
         }
 
         // Filter recipes by name
         function filterRecipes() {
-            const filterText = removeAccents(
-            document.getElementById("filterInput").value.toLowerCase()
-            );
-            filteredRecipes = allRecipes.filter((recipe) =>
-            removeAccents(recipe.name.toLowerCase()).includes(filterText)
-            );
+            const filterText = removeAccents(document.getElementById("filterInput").value.toLowerCase());
+            filteredRecipes = allRecipes.filter(recipe => removeAccents(recipe.name.toLowerCase()).includes(filterText) && !recipe.isDeleted);
             currentPage = 1;
             renderRecipes();
+        }
+
+        // Soft delete function
+        function softDeleteRecipe(index) {
+            allRecipes[index].isDeleted = true;
+            filterRecipes();
         }
 
         // Remove accents from a string
@@ -276,22 +240,23 @@
             return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         }
 
+        // Pagination functions
         function prevPage() {
             if (currentPage > 1) {
-            currentPage--;
-            renderRecipes();
+                currentPage--;
+                renderRecipes();
             }
         }
 
         function nextPage() {
             if (currentPage * recipesPerPage < filteredRecipes.length) {
-            currentPage++;
-            renderRecipes();
+                currentPage++;
+                renderRecipes();
             }
         }
 
-        // Simulate initial recipe loading
-        fetchRecipes();
-        </script>
-    </body>
+        // Initial render
+        renderRecipes();
+    </script>
+</body>
 </html>

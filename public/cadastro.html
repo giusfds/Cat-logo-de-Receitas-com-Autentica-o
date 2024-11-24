@@ -154,19 +154,19 @@
                     body: JSON.stringify(user)
                 })
 
+
                 .then(response => {
                     if(!response.ok){
+                        alert("Usuario ja existente, tente outro")
                         throw new Error('Erro ao registrar usuario')
                     }
-                    return response;
+                    return response.json();
                 })
 
                 .then(data => {
-                    console.log(data)
-                    if(response == true){
-                        window.location.href = "login.html";
+                    if(data == true){
+                        window.location.href = 'login.html'
                     }
-                   
                 })
              }
         </script>

@@ -15,6 +15,26 @@ export class ReceitaService {
         private readonly users: UsersService
     ) { }
 
+    async edit(receita: receita, id: string) : Promise<receita>{
+        const foundRecipe = await this.findRecipeById(id);
+
+        if(!foundRecipe) {
+            throw new Error('Campos obrigatórios estão faltando');
+        }
+        await this.recipeRepository.delete(id);
+        
+        foundRecipe.nome = receita.nome;
+        foundRecipe.ingredientes = receita.ingredientes;
+        foundRecipe.modo_preparo = receita.modo_preparo;
+        foundRecipe.popularidade = receita.popularidade;
+        foundRecipe.tempo_preparo = receita.tempo_preparo;
+        foundRecipe.dificuldade = receita.dificuldade;
+
+        console.log(foundRecipe + "Atualizada");
+
+        return await this.recipeRepository.save(foundRecipe);
+    }   
+
     async create(receita: receita, username: string) {
         const dbRecipe = new RecipeEntity();
 
@@ -59,8 +79,8 @@ export class ReceitaService {
         return recipes;
     }
 
-    async deleteRecipe(receita: receita): Promise<boolean | null>{
-        const foundRecipe = await this.findRecipeByName(receita.nome);
+    async deleteRecipe(receita: string): Promise<boolean | null>{
+        const foundRecipe = await this.findRecipeByName(receita);
 
         const result = await this.recipeRepository.delete(foundRecipe.id);
 
@@ -88,4 +108,22 @@ export class ReceitaService {
             popularidade: foundRecipe.popularidade
         }
     }
+
+    async findRecipeById(id: string): Promise<receita | null>{
+        const foundRecipe = await this.recipeRepository.findOne({where: { id }});
+
+        if(!foundRecipe) {
+            throw new NotFoundException;
+        }
+
+        return {
+            id: foundRecipe.id,
+            nome: foundRecipe.nome,
+            ingredientes: foundRecipe.ingredientes,
+            modo_preparo: foundRecipe.modo_preparo,
+            tempo_preparo: foundRecipe.tempo_preparo,
+            dificuldade: foundRecipe.dificuldade,
+            popularidade: foundRecipe.popularidade
+        }
+    }   
 }   

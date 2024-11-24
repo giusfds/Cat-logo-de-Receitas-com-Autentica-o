@@ -69,6 +69,7 @@
                 display: none;
                 text-align: center;
             }
+
         </style>
     </head>
     <body>
@@ -84,6 +85,8 @@
                     <input type="password" id="loginPassword" required>
                 </div>
                 <button type="button" class="btn" onclick="loginUser()">Entrar</button>
+                
+                <p>Não possui Login? <a href="cadastro.html">Cadastre-se</a></p>
                 <div class="error" id="loginErrorMessage"></div>
             </form>
         </div>
@@ -95,24 +98,40 @@
                 password: ""
             };
 
-            function loginUser() {
-                const username     = document.getElementById("loginUsername").value;
-                const password     = document.getElementById("loginPassword").value;
+            async function loginUser() {
+                registeredUser.username = document.getElementById("loginUsername").value;
+                registeredUser.password = document.getElementById("loginPassword").value;
                 const errorMessage = document.getElementById("loginErrorMessage");
 
                 // clean error message
                 errorMessage.style.display = "none";        
                 errorMessage.textContent = "";
 
-                // check user credentials
-                if (username === registeredUser.username && password === registeredUser.password) {
+                
+                await fetch("http://localhost:3000/auth/login", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(registeredUser)
+                })
+
+                .then(response => {
+                    if(!response.ok){
+                        errorMessage.textContent = "Nome de usuário ou senha incorretos.";
+                        errorMessage.style.display = "block";
+                        throw new Error('Erro ao registrar usuario')
+                    }
+                    return response.json();
+                })
+
+                .then(data => {
                     alert("Login bem-sucedido!");
-                    // redirect to dashboard
-                    window.location.href = "listagem.html";
-                } else {
-                    errorMessage.textContent = "Nome de usuário ou senha incorretos.";
-                    errorMessage.style.display = "block";
-                }
+                    sessionStorage.setItem('token', data.token)
+                    localStorage.setItem('userInfo', registeredUser.username)
+                    window.location.href = 'listagem.html';
+                })
+
             }
         </script>
     </body>

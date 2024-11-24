@@ -162,7 +162,7 @@
 
         <script>
             // Menu functions
-            function openMenu() {
+            async function openMenu() {
                 document.getElementById("menuOverlay").style.display = "flex";
             }
 
@@ -176,16 +176,41 @@
 
             // Form submission logic
             document.getElementById("recipeForm").addEventListener("submit", function(event) {
+                const token = sessionStorage.getItem('token');
+                const userInfo = localStorage.getItem('userInfo');
+                console.log(token);
                 event.preventDefault();
-                const recipeData = {
-                    name: document.getElementById("recipeName").value,
-                    ingredients: document.getElementById("ingredients").value,
-                    preparation: document.getElementById("preparation").value,
-                    prepTime: document.getElementById("prepTime").value,
-                    difficulty: document.getElementById("difficulty").value
-                };
+                const recipeData = JSON.stringify({
+                    nome: document.getElementById("recipeName").value,
+                    ingredientes: document.getElementById("ingredients").value.split(/[,;]+/),
+                    modo_preparo: document.getElementById("preparation").value,
+                    tempo_preparo: parseInt(document.getElementById("prepTime").value),
+                    dificuldade: document.getElementById("difficulty").value,
+                    popularidade: 0,
+                    username: userInfo
+                });
                 console.log("Receita salva:", recipeData);
                 // Simulate saving recipe logic here
+                
+                fetch("http://localhost:3000/receita/criar", {
+                
+                method: 'POST',
+                headers:{
+                    'Content-Type' : "application/json",
+                    'Authorization': `Bearer ${token}` 
+                },
+
+                body: recipeData,
+            })
+            .then(response => response.json())
+            .then(data=> {
+                console.log(data)
+                alert("Sucesso no registro");
+                window.location.href = 'listagem.html'
+            })
+            
+            .then(error=>console.error('Erro de registro', error))
+        
             });
         </script>
     </body>

@@ -1,11 +1,11 @@
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import {config} from 'dotenv'
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { RecipeEntity } from './entities/recipes.entity';
 
 config();
-
+    
 const configService = new ConfigService();
 
 const dataSourceOptions: DataSourceOptions = {

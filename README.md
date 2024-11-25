@@ -95,24 +95,66 @@ Explique as decisões técnicas tomadas e as boas práticas adotadas:
 
 ---
 
-> FALTA FAZER ISSO AQUI
+## 6. Instruções de Instalação e Execução
+1. Pré-requisitos
 
-## 6. **Instruções de Instalação e Execução**
-Dê instruções claras sobre como rodar o projeto localmente:
+Certifique-se de ter as seguintes ferramentas instaladas no seu ambiente:
 
-1. **Pré-requisitos**: Liste ferramentas necessárias (Node.js, npm, banco de dados).
-2. **Instalação**:
-```bash
-    git clone <link-do-repositorio>
-    cd nome-do-projeto
+    Node.js (versão mínima recomendada: 16.x.x)
+    npm (instalado junto com o Node.js)
+    Banco de dados: PostgreSQL (versão mínima: 12.x)
+    Git (para clonar o repositório)
+
+2. Instalação
+
+    Clone o repositório do projeto:
+
+git clone <link-do-repositorio>
+
+Acesse o diretório do projeto:
+
+cd nome-do-projeto
+
+Instale as dependências do projeto:
+
     npm install
-```
-3. **Configuração do Banco de Dados**: Inclua instruções sobre como configurar o banco de dados (por exemplo, usando PostgreSQL).
-4. **Iniciar o Projeto**:
+
+3. Configuração do Banco de Dados
+
+    Certifique-se de que o PostgreSQL está rodando no seu ambiente local.
+    Crie um banco de dados com o nome desejado (exemplo: nome_do_banco).
+    Execute as migrações (se aplicável) para criar as tabelas no banco:
+
+    npx prisma migrate dev
+
+    (Se não estiver usando o Prisma, substitua pelo comando correspondente do ORM utilizado, como Sequelize, TypeORM, etc.)
+
+4. Variáveis de Ambiente
+
+Crie um arquivo chamado .env na raiz do projeto e configure as variáveis a seguir:
+
+### Conexão com o banco de dados PostgreSQL
+`DATABASE_URL=postgresql://usuario:senha@localhost:5432/nome_do_banco`
+
+### Chave secreta para autenticação JWT
+`JWT_SECRET=sua_chave_secreta_segura`
+
+### Porta na qual o servidor será executado
+`PORT=3000`
+
+Descrição das variáveis:
+
+    DATABASE_URL: String de conexão para o banco de dados PostgreSQL. Substitua usuario, senha e nome_do_banco pelos valores corretos do seu ambiente.
+    JWT_SECRET: Uma chave segura usada para assinar e verificar tokens JWT.
+    PORT: Porta local para execução do servidor (padrão: 3000).
+
+5. Iniciar o Projeto
+
+Para rodar o projeto no modo de depuração, utilize:
 ```bash
-    npm run dev
+npm run start:debug
 ```
-5. **Variáveis de Ambiente**: Explique as variáveis necessárias (como `DATABASE_URL`, `JWT_SECRET`, etc.).
+O servidor será iniciado no endereço padrão http://localhost:3000/static/index.html 
 
 ---
 

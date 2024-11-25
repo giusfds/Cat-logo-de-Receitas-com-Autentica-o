@@ -28,70 +28,70 @@ Além disso, o layout é totalmente responsivo, adaptando-se facilmente a difere
 
 ```bash
 recipe_vault/
-├── dist/                  # Código compilado pelo TypeScript (não editável)
-│   ├── db/                # Código compilado relacionado ao banco de dados
-│   ├── receita/           # Código compilado do módulo de receitas
-│   │   ├── receita.controller.d.ts  # Declaração de tipos para o controlador
-│   │   ├── receita.controller.js    # Arquivo JavaScript compilado
-│   │   ├── receita.dto.d.ts         # Declaração de tipos para os DTOs
-│   │   ├── receita.dto.js           # Arquivo JavaScript compilado dos DTOs
-│   │   ├── receita.module.d.ts      # Declaração de tipos do módulo
-│   │   ├── receita.module.js        # Arquivo JavaScript compilado do módulo
-│   │   ├── receita.service.d.ts     # Declaração de tipos para o serviço
-│   │   ├── receita.service.js       # Arquivo JavaScript compilado do serviço
-│   │   └── ...                      # Outros arquivos gerados
-│   ├── users/             # Código compilado do módulo de usuários
-│   │   ├── users.controller.d.ts    # Declaração de tipos para o controlador
-│   │   ├── users.controller.js      # Arquivo JavaScript compilado
-│   │   ├── users.dto.d.ts           # Declaração de tipos para os DTOs
-│   │   ├── users.dto.js             # Arquivo JavaScript compilado dos DTOs
-│   │   ├── users.module.d.ts        # Declaração de tipos do módulo
-│   │   ├── users.module.js          # Arquivo JavaScript compilado do módulo
-│   │   ├── users.service.d.ts       # Declaração de tipos para o serviço
-│   │   ├── users.service.js         # Arquivo JavaScript compilado do serviço
-│   │   └── ...                      # Outros arquivos gerados
-│   └── ...                          # Outros diretórios compilados
-├── node_modules/          # Dependências do projeto
-├── public/                # Arquivos estáticos do frontend
-│   ├── adicionar.html     # Página para adicionar receitas
-│   ├── cadastro.html      # Página de cadastro de usuários
-│   ├── listagem.html      # Página de listagem de receitas
-│   └── login.html         # Página de login
-├── src/                   # Código-fonte do projeto
-│   ├── auth/              # Módulo de autenticação
-│   │   ├── auth.controller.ts  # Controlador do módulo de autenticação
-│   │   ├── auth.dto.ts         # Data Transfer Objects para autenticação
-│   │   ├── auth.guard.ts       # Guardas de rota (proteção)
-│   │   ├── auth.module.ts      # Configuração do módulo
-│   │   └── auth.service.ts     # Lógica de autenticação
-│   ├── db/                # Configuração do banco de dados
-│   │   ├── entities/      # Entidades do banco
-│   │   ├── migrations/    # Arquivos de migração
-│   │   ├── db.module.ts   # Configuração do módulo do banco
+├── dist/                                # Código compilado pelo TypeScript (não editável)
+│   ├── db/                              # Código compilado relacionado ao banco de dados
+│   ├── receita/                         # Código compilado do módulo de receitas
+│   │   ├── receita.controller.d.ts      # Declaração de tipos para o controlador
+│   │   ├── receita.controller.js        # Arquivo JavaScript compilado
+│   │   ├── receita.dto.d.ts             # Declaração de tipos para os DTOs
+│   │   ├── receita.dto.js               # Arquivo JavaScript compilado dos DTOs
+│   │   ├── receita.module.d.ts          # Declaração de tipos do módulo
+│   │   ├── receita.module.js            # Arquivo JavaScript compilado do módulo
+│   │   ├── receita.service.d.ts         # Declaração de tipos para o serviço
+│   │   ├── receita.service.js           # Arquivo JavaScript compilado do serviço
+│   │   └── ...                          # Outros arquivos gerados
+│   ├── users/                           # Código compilado do módulo de usuários
+│   │   ├── users.controller.d.ts        # Declaração de tipos para o controlador
+│   │   ├── users.controller.js          # Arquivo JavaScript compilado
+│   │   ├── users.dto.d.ts               # Declaração de tipos para os DTOs
+│   │   ├── users.dto.js                 # Arquivo JavaScript compilado dos DTOs
+│   │   ├── users.module.d.ts            # Declaração de tipos do módulo
+│   │   ├── users.module.js              # Arquivo JavaScript compilado do módulo
+│   │   ├── users.service.d.ts           # Declaração de tipos para o serviço
+│   │   ├── users.service.js             # Arquivo JavaScript compilado do serviço
+│   │   └── ...                          # Outros arquivos gerados
+│   └── ...                              # Outros diretórios compilados
+├── node_modules/                        # Dependências do projeto
+├── public/                              # Arquivos estáticos do frontend
+│   ├── adicionar.html                   # Página para adicionar receitas
+│   ├── cadastro.html                    # Página de cadastro de usuários
+│   ├── listagem.html                    # Página de listagem de receitas
+│   └── login.html                       # Página de login
+├── src/                                 # Código-fonte do projeto
+│   ├── auth/                            # Módulo de autenticação
+│   │   ├── auth.controller.ts           # Controlador do módulo de autenticação
+│   │   ├── auth.dto.ts                  # Data Transfer Objects para autenticação
+│   │   ├── auth.guard.ts                # Guardas de rota (proteção)
+│   │   ├── auth.module.ts               # Configuração do módulo
+│   │   └── auth.service.ts              # Lógica de autenticação
+│   ├── db/                              # Configuração do banco de dados
+│   │   ├── entities/                    # Entidades do banco
+│   │   ├── migrations/                  # Arquivos de migração
+│   │   ├── db.module.ts                 # Configuração do módulo do banco
 │   │   └── typeOrm.migration-config.ts  # Configuração de migrações
-│   ├── receita/           # Módulo de receitas
-│   │   ├── receita.controller.ts  # Controlador do módulo de receitas
-│   │   ├── receita.dto.ts         # DTOs do módulo de receitas
-│   │   ├── receita.module.ts      # Configuração do módulo
-│   │   └── receita.service.ts     # Lógica de receitas
-│   ├── users/             # Módulo de usuários
-│   │   ├── users.controller.ts   # Controlador do módulo de usuários
-│   │   ├── users.dto.ts          # DTOs do módulo de usuários
-│   │   ├── users.module.ts       # Configuração do módulo
-│   │   └── users.service.ts      # Lógica de usuários
-│   ├── app.controller.ts  # Controlador principal
-│   ├── app.module.ts      # Módulo raiz
-│   ├── app.service.ts     # Serviço principal
-│   └── main.ts            # Arquivo de entrada do NestJS
-├── .eslintrc.js           # Configuração do ESLint
-├── .gitignore             # Arquivos e pastas ignorados pelo Git
-├── .prettierrc            # Configuração do Prettier
-├── nest-cli.json          # Configuração do CLI do NestJS
-├── package-lock.json      # Dependências do projeto (versões exatas)
-├── package.json           # Configuração geral do projeto
-├── README.md              # Documentação do projeto
-├── tsconfig.build.json    # Configuração de build do TypeScript
-└── tsconfig.json          # Configuração principal do TypeScript
+│   ├── receita/                         # Módulo de receitas
+│   │   ├── receita.controller.ts        # Controlador do módulo de receitas
+│   │   ├── receita.dto.ts               # DTOs do módulo de receitas
+│   │   ├── receita.module.ts            # Configuração do módulo
+│   │   └── receita.service.ts           # Lógica de receitas
+│   ├── users/                           # Módulo de usuários
+│   │   ├── users.controller.ts          # Controlador do módulo de usuários
+│   │   ├── users.dto.ts                 # DTOs do módulo de usuários
+│   │   ├── users.module.ts              # Configuração do módulo
+│   │   └── users.service.ts             # Lógica de usuários
+│   ├── app.controller.ts                # Controlador principal
+│   ├── app.module.ts                    # Módulo raiz
+│   ├── app.service.ts                   # Serviço principal
+│   └── main.ts                          # Arquivo de entrada do NestJS
+├── .eslintrc.js                         # Configuração do ESLint
+├── .gitignore                           # Arquivos e pastas ignorados pelo Git
+├── .prettierrc                          # Configuração do Prettier
+├── nest-cli.json                        # Configuração do CLI do NestJS
+├── package-lock.json                    # Dependências do projeto (versões exatas)
+├── package.json                         # Configuração geral do projeto
+├── README.md                            # Documentação do projeto
+├── tsconfig.build.json                  # Configuração de build do TypeScript
+└── tsconfig.json                        # Configuração principal do TypeScript
 
 ```
 

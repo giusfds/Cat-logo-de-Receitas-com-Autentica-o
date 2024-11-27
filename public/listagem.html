@@ -282,7 +282,8 @@
             window.location.href = 'login.html';
         }
 
-        // Fetch recipes from the server
+        addEventListener('DOMContentLoaded', () => {
+                    // Fetch recipes from the server
         fetch('http://localhost:3000/receita/list/' + userInfo, {
             method: 'GET',
             headers: {
@@ -291,19 +292,23 @@
         })
             .then(response => {
                 if (!response.ok) {
+                    console.log(response)
                     throw new Error('Erro na busca das receitas ou receitas ainda não registradas');
                 }
                 return response.json();
             })
             .then(data => {
-                allRecipes = data.recipes || [];
-                filteredRecipes = [...allRecipes]; // Copiar os dados para filteredRecipes
-
+                console.log(data);
+                allRecipes = data;
+                filteredRecipes = allRecipes;
                 renderRecipes();
             })
             .catch(error => {
                 console.error("Erro na busca de receitas", error);
             });
+
+        });
+
 
         // Menu functions
         function openMenu() {
@@ -333,7 +338,7 @@
                     li.className = "recipe-item";
                     li.innerHTML = `
                         <h3>${recipe.nome}</h3>
-                        <button class="delete-button" onclick="softDeleteRecipe(${index + start})">Excluir</button>
+                        <button class="delete-button" data-value="${index + start}" onclick="softDeleteRecipe(this)">Excluir</button>
                         <div class="recipe-details">
                             <p><strong>Ingredientes:</strong> ${recipe.ingredientes}</p>
                             <p><strong>Modo de Preparo:</strong> ${recipe.modo_preparo}</p>
@@ -352,7 +357,7 @@
 
         // Função para abrir o modal com os dados da receita
         function editRecipe(index) {
-
+            console.log(token)
             const recipe = filteredRecipes[index];
 
             document.getElementById('editName').value = recipe.nome;
@@ -371,19 +376,19 @@
 
                 // Pegando os valores dos campos do formulário
                 const newRecipe = {
+                    id: recipe.id,
                     nome: document.getElementById('editName').value,
-                    ingredientes: document.getElementById('editIngredients').value,
-                    modo_preparo:[
-                        document.getElementById('editPreparation').value
-                    ],
-                    tempo_preparo: document.getElementById('editPrepTime').value,
+                    ingredientes: document.getElementById('editIngredients').value.split(','), // Transformar em array
+                    modo_preparo: document.getElementById('editPreparation').value,
+                    tempo_preparo: parseInt(document.getElementById('editPrepTime').value, 10), // Garantir que seja número
                     dificuldade: document.getElementById('difficulty').value,
                     popularidade: recipe.popularidade, // Assuming 'recipe' is globally available
+                    isativo: true
                 };
 
                 // Verifique se os campos obrigatórios foram preenchidos
-                if (!newRecipe.nome || !newRecipe.ingredientes || !newRecipe.modo_preparo || !newRecipe.tempo_preparo || !newRecipe.dificuldade) {
-                    alert("Por favor, preencha todos os campos.");
+                if (!newRecipe.nome || !newRecipe.ingredientes.length || !newRecipe.modo_preparo.length || !newRecipe.tempo_preparo || !newRecipe.dificuldade) {
+                    alert("Por favor, preencha todos os campos corretamente.");
                     return; // Impede a requisição de ser feita se algum campo estiver vazio
                 }
 
@@ -391,31 +396,45 @@
                 console.log(newRecipe);
 
                 // Enviando a requisição PUT para atualizar a receita
-                fetch('http://localhost:3000/receita/' + recipe.id, {
+                fetch('http://localhost:3000/receita', {
                     method: "PUT",
                     headers: {
                         'Content-type': 'application/json',
-                        'Authorization': `Bearer ${token}`  // Verifique se 'token' está definido corretamente
+                        'Authorization': `Bearer ${token}` // Verifique se 'token' está definido corretamente
                     },
                     body: JSON.stringify(newRecipe) // Corpo da requisição como string JSON
                 })
                     .then(response => {
+                        console.log(response)
                         if (!response.ok) {
-                            throw new Error("Erro na edição, verifique as informações");
+                            return response.json().then(err => {
+                                throw { status: response.status, message: err.message || "Erro desconhecido" };
+                            });
                         }
                         return response.json();
                     })
                     .then(data => {
                         console.log(data);
                         alert("Receita editada com sucesso");
-                        location.reload();  // Recarrega a página para refletir as alterações
+                        location.reload();
                     })
                     .catch(error => {
                         console.error(error);
-                        alert("Erro ao editar a receita");
+
+                        // Mensagens específicas com base no erro
+                        if (error.status === 400) {
+                            alert("Erro na requisição: Campos inválidos ou faltando.");
+                        } else if (error.status === 401) {
+                            alert("Erro de autenticação: Token inválido ou expirado.");
+                        } else if (error.status === 403) {
+                            alert("Erro de permissão: Você não tem autorização para editar esta receita.");
+                        } else if (error.status === 404) {
+                            alert("Erro: Receita não encontrada.");
+                        } else {
+                            alert(`Erro ao editar a receita: ${error.message || "Tente novamente mais tarde."}`);
+                        }
                     });
             });
-
 
         }
 
@@ -431,11 +450,15 @@
         }
 
         // Soft delete function
-        function softDeleteRecipe(index) {
-            console.log(allRecipes[index])
+        function softDeleteRecipe(buttonElement) {
+            const index = parseInt(buttonElement.dataset.value, 10);
+            
+            console.log(index)
+            const recipe = filteredRecipes[index];
+            console.log(recipe)
 
-            fetch('http://localhost:3000/receita/' + allRecipes[index].nome, {
-                method: 'DELETE',
+            fetch('http://localhost:3000/receita/' + filteredRecipes[index].nome, {
+                method: "DELETE",
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
@@ -451,10 +474,9 @@
                 .then(data => {
                     console.log(data)
                     alert("Receita deletada com sucesso")
+                    location.reload();
                 })
-
-            location.reload();
-        }
+        }   
 
         // Remove accents from a string
         function removeAccents(str) {

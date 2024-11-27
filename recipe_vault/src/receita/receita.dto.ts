@@ -1,4 +1,4 @@
-import { ArrayMaxSize, ArrayMinSize, IsArray, IsEnum, IsNumber, IsOptional, IsString,IsUUID, Length, MaxLength, MinLength } from "class-validator";
+import { ArrayMaxSize, ArrayMinSize, IsArray, IsBoolean, IsEnum, IsNumber, IsOptional, IsString,IsUUID, Length, MaxLength, MinLength } from "class-validator";
 
 export enum dificuldadeEnum{
     FACIL = 'FACIL',
@@ -35,4 +35,7 @@ export class receita{
 
     @IsNumber()
     popularidade: number;
+
+    @IsBoolean()
+    isativo: boolean;
 }

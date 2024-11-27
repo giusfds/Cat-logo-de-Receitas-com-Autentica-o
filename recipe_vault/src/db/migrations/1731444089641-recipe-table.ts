@@ -14,6 +14,7 @@ export class RecipeTable1731444089641 implements MigrationInterface {
                 tempo_preparo integer NOT NULL,
                 dificuldade varchar(10) NOT NULL,
                 popularidade integer NOT NULL,
+                isativo boolean NOT NULL DEFAULT TRUE,
                 CONSTRAINT recipe_pk PRIMARY KEY (id),
                 CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE SET NULL
             );

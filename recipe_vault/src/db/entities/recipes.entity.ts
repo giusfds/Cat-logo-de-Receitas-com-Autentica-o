@@ -29,4 +29,6 @@ export class RecipeEntity{
     @Column({type: 'integer'})
     popularidade: number;
 
+    @Column({type: 'boolean'})
+    isativo: boolean;
 }

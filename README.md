@@ -191,9 +191,9 @@ Além das funcionalidades principais, foram implementados diferenciais para aume
 
 Certifique-se de ter as seguintes ferramentas instaladas no seu ambiente:
 
-    Node.js (versão mínima recomendada: 16.x.x)
+    Node.js (versão mínima recomendada: 18.20.4)
     npm (instalado junto com o Node.js)
-    Banco de dados: PostgreSQL (versão mínima: 12.x)
+    Banco de dados: PostgreSQL (versão mínima: 14.13)
     Git (para clonar o repositório)
 
 ### Instalação
@@ -242,6 +242,7 @@ Descrição das variáveis:
 ### Iniciar o Projeto
 
 Para rodar o projeto no modo de depuração, utilize:
+
 ```bash
 npm run start:debug
 ```
